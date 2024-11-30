@@ -16,7 +16,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
+from . import views
 
 urlpatterns = [
-    
+    path("",views.register, name="register"),
+    path("login",views.login,name="login"),
+    path("home",views.home,name="home"),
+    path("logout",views.logout,name="logout"),
+    path('add_income/', views.add_income, name='add_income'),
+    path('add_expense/', views.add_expense, name='add_expense'),
+    path('income/', views.income, name='income'),
+    path('add_category/', views.add_category, name='add_category'),
+    path('delete_income/',views.delete_income,name='delete_income'),
+    path('update_income/<int:income_id>/', views.update_income, name='update_income')
 ]
