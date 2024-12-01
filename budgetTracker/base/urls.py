@@ -28,5 +28,9 @@ urlpatterns = [
     path('income/', views.income, name='income'),
     path('add_category/', views.add_category, name='add_category'),
     path('delete_income/',views.delete_income,name='delete_income'),
-    path('update_income/<int:income_id>/', views.update_income, name='update_income')
+    path('update_income/<int:income_id>/', views.update_income, name='update_income'),
+    path('delete_expense/',views.delete_expense,name='delete_expense'),
+    path('update_expense/<int:expense_id>/', views.update_expense, name='update_expense'),
+    path('add-emi/', views.add_emi, name='add_emi'),
+    path('emis/', views.emi_list, name='emi_list')
 ]

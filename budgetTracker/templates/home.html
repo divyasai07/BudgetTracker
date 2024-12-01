@@ -37,13 +37,13 @@
           <li class="sidebar-item">
             <a href="{% url 'income' %}" class="sidebar-link">
               <i class="lni lni-rupee"></i>
-              <span>Income</span>
+              <span>History</span>
             </a>
           </li>
           <li class="sidebar-item">
-            <a href="#" class="sidebar-link">
+            <a href="{% url 'emi_list' %}" class="sidebar-link">
               <i class="lni lni-rupee"></i>
-              <span>Expenses</span>
+              <span>EMI</span>
             </a>
           </li>
 
@@ -91,18 +91,19 @@
             </div>
 
             <div class="flex-item">
-              <button
-                type="button"
+              <a
+                href="{% url 'add_expense' %}"
+                target="_blank"
                 class="btn btn-outline-success"
-                data-bs-toggle="modal"
-                data-bs-target="#expenseModal"
+                >Add Expense</a
               >
-                Add Expenses
-              </button>
             </div>
 
             <div class="flex-item">
-              <a href="#" target="_blank" class="btn btn-outline-success"
+              <a
+                href="{% url 'add_emi' %}"
+                target="_blank"
+                class="btn btn-outline-success"
                 >Add Emi</a
               >
             </div>

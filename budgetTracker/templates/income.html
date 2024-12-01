@@ -37,14 +37,14 @@
             </li>
             <li class="sidebar-item">
               <a href="#" class="sidebar-link">
-                <i class="lni lni-home-2"></i>
-                <span>Income</span>
+                <i class="lni lni-rupee"></i>
+                <span>History</span>
               </a>
             </li>
             <li class="sidebar-item">
-              <a href="#" class="sidebar-link">
-                <i class="lni lni-home-2"></i>
-                <span>Expenses</span>
+              <a href="{% url 'emi_list' %}" class="sidebar-link">
+                <i class="lni lni-rupee"></i>
+                <span>EMI</span>
               </a>
             </li>
   
@@ -75,9 +75,42 @@
           </div>
         </aside>
         <div class="main p-4">
-          <h1>{{user.name}} Income Record</h1>
-          <h2>Your Income Records</h2>
-          {% if incomes %}
+          <div class="container">
+            <h1>Your Income Records</h1>
+            {% if incomes %}
+            <table>
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Amount</th>
+                  <th>Description</th>
+                  <th>Category</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for income in incomes %}
+                <tr>
+                  <td>{{ income.date }}</td>
+                  <td>{{ income.amount }}</td>
+                  <td>{{ income.description }}</td>
+                  <td>{{ income.category.name }}</td>
+                  <td class="delete-icon" data-bs-toggle="modal" data-bs-target="#deleteIncomeModal" data-income-id="{{ income.id }}">
+                    <i class="lni lni-trash-3"></i>
+                  </td> 
+                  <td class="edit-icon">
+                    <a href="{% url 'update_income' income.id %}">
+                        <i class="lni lni-pencil-1"></i>
+                    </a>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          {% else %}
+          <p>No income records found.</p>
+          {% endif %}
+          <h1>Your Expense Records</h1>
+          {% if expenses %}
           <table>
             <thead>
               <tr>
@@ -88,30 +121,59 @@
               </tr>
             </thead>
             <tbody>
-              {% for income in incomes %}
+              {% for expense in expenses %}
               <tr>
-                <td>{{ income.date }}</td>
-                <td>{{ income.amount }}</td>
-                <td>{{ income.description }}</td>
-                <td>{{ income.category.name }}</td>
-                <td class="delete-icon" data-bs-toggle="modal" data-bs-target="#deleteIncomeModal" data-income-id="{{ income.id }}">
+                <td>{{ expense.date }}</td>
+                <td>{{ expense.amount }}</td>
+                <td>{{ expense.description }}</td>
+                <td>{{ expense.category.name }}</td>
+                {% if expense.category.name != 'EMI' %}
+                <td class="delete-icon" data-bs-toggle="modal" data-bs-target="#deleteExpenseModal" data-expense-id="{{ expense.id }}">
                   <i class="lni lni-trash-3"></i>
                 </td> 
                 <td class="edit-icon">
-                  <a href="{% url 'update_income' income.id %}">
+                  <a href="{% url 'update_expense' expense.id %}">
                       <i class="lni lni-pencil-1"></i>
                   </a>
-              </td>
-               
+                </td>
+                {% else %}
+                <td>Not deletable</td>
+                <td>Not editable</td>
               </tr>
+              {% endif %}
               {% endfor %}
-
             </tbody>
           </table>
           {% else %}
-          <p>No income records found.</p>
+          <p>No expense records found.</p>
           {% endif %}
-        
+          <div class="modal fade" id="deleteExpenseModal" tabindex="-1" role="dialog" aria-labelledby="deleteExpenseModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="deleteExpenseModalLabel">Confirm Deletion</h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <p>Are you sure you want to delete this expense entry?</p>
+                </div>
+                <div class="modal-footer">
+                  <form method="POST" action="{% url 'delete_expense' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="expense_id" id="expense-id" />
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                    <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+                    
           
 <div class="modal fade" id="deleteIncomeModal" tabindex="-1" role="dialog" aria-labelledby="deleteIncomeModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">

@@ -136,3 +136,4 @@ class Report(models.Model):
 
     def __str__(self):
         return f"Report for {self.user.email} - {self.report_type}" 
+    

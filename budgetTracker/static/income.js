@@ -1,13 +1,24 @@
 const hamBurger = document.querySelector(".toggle-btn");
+const sidebar = document.querySelector("#sidebar");
+
+sidebar.classList.add("expand");
 
 hamBurger.addEventListener("click", function () {
-  document.querySelector("#sidebar").classList.toggle("expand");
+  sidebar.classList.toggle("compress");
+  sidebar.classList.toggle("expand");
 });
+
 $("#deleteIncomeModal").on("show.bs.modal", function (event) {
   var button = $(event.relatedTarget);
   var incomeId = button.data("income-id");
   var modal = $(this);
   modal.find("#income-id").val(incomeId);
+});
+document.querySelectorAll(".delete-icon[data-expense-id]").forEach((icon) => {
+  icon.addEventListener("click", function () {
+    const expenseId = this.getAttribute("data-expense-id");
+    document.getElementById("expense-id").value = expenseId;
+  });
 });
 
 const editIcons = document.querySelectorAll(".edit-icon");

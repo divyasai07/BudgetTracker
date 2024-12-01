@@ -50,7 +50,9 @@ body {
   width: 260px;
   min-width: 260px;
 }
-
+#sidebar.compress {
+  width: 80px;
+}
 .toggle-btn {
   background-color: transparent;
   cursor: pointer;

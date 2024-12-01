@@ -26,6 +26,7 @@ body {
 
 .wrapper {
   display: flex;
+  gap: 20px;
 }
 
 .main {
@@ -50,9 +51,7 @@ body {
   width: 260px;
   min-width: 260px;
 }
-#sidebar.compress {
-  width: 80px;
-}
+
 .toggle-btn {
   background-color: transparent;
   cursor: pointer;
@@ -107,37 +106,69 @@ a.sidebar-link:hover {
 .sidebar-item {
   position: relative;
 }
-.text-left {
-  padding: 20px;
-  color: #11a122;
+.container {
+  display: flex;
+
+  min-height: 100vh;
 }
-.content {
-  padding: 30px;
+.income {
+  position: relative;
+  width: 400px;
+  height: 620px;
+  background: #fafbfe;
+  border: 2px solid #11a122;
+  padding: 80px 30px 25px 30px;
 }
-.flex-item {
-  background-color: #f8f9fa;
-  padding: 15px;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+.header {
   text-align: center;
-  flex: 1;
-  margin: 0 10px;
-}
-.flex-item a {
-  text-decoration: none;
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 10px;
   color: #11a122;
-  font-weight: bold;
 }
-.flex-item a:hover {
-  text-decoration: underline;
+.form-group-1 {
+  position: relative;
+  display: flex;
+  flex-direction: column;
 }
-.d-flex {
-  gap: 20px;
-  flex-wrap: wrap;
+.input-control {
+  height: 40px;
+  background: transparent;
+
+  border: 0;
+  border-bottom: 1px solid #070707;
+  margin: 15px 0;
+  padding: 0 15px;
+  outline: none;
 }
-@media (max-width: 768px) {
-  .d-flex {
-    flex-direction: column;
-    gap: 10px;
-  }
+.input-control:focus,
+.input-control:valid {
+  border-bottom: 2px solid #11a122;
+}
+.input-control:focus ~ label,
+.input-control:valid ~ label {
+  top: 5px;
+  font-size: 12px;
+  color: #11a122;
+}
+.form-group-1 label {
+  position: absolute;
+  margin-bottom: 5px;
+  top: 4px;
+  left: 3px;
+  transition: 0.3s;
+  color: #11a122;
+}
+.submit {
+  height: 40px;
+  width: 100%;
+  color: #fafbfe;
+  border: none;
+  background: #11a122;
+  margin-top: 20px;
+  cursor: pointer;
+  transition: 0.4s ease-out;
+}
+.submit:hover {
+  box-shadow: 0 1px 10px #11a122;
 }

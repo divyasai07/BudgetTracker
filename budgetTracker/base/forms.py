@@ -88,3 +88,9 @@ class CustomUserChangeForm(forms.ModelForm):
     def clean_password(self):
         
         return self.initial["password"]
+from .models import EMI
+
+class EMIForm(forms.ModelForm):
+    class Meta:
+        model = EMI
+        fields = ['amount', 'start_date', 'end_date', 'frequency', 'description', 'next_payment_date']
