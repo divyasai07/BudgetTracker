@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser,BaseUserManager, PermissionsMixin
+from django.db.models import Sum
 
 
 # User Model
@@ -94,7 +95,7 @@ class EMI(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     start_date = models.DateField()
     end_date = models.DateField()
-    frequency = models.CharField(max_length=20)  # e.g., "Monthly"
+    frequency = models.CharField(max_length=20) 
     description = models.TextField(blank=True, null=True)
     next_payment_date = models.DateField()
 
@@ -105,14 +106,17 @@ class EMI(models.Model):
 # Budget Model
 class Budget(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='budgets')
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, limit_choices_to= { 'category_type' : 'expense'})
     amount_limit = models.DecimalField(max_digits=10, decimal_places=2)
-    start_date = models.DateField()
-    end_date = models.DateField()
 
     def __str__(self):
         return f"{self.user.email} - {self.category.name} Budget {self.amount_limit}"
-
+    def is_exceeded(self):
+        total_expenses = Expense.objects.filter(
+            user=self.user,
+            category=self.category,
+        ).aggregate(Sum('amount'))['amount__sum'] or 0
+        return total_expenses > self.amount_limit
 
 # Alert Model
 class Alert(models.Model):
@@ -120,7 +124,7 @@ class Alert(models.Model):
     message = models.TextField()
     is_read = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
-
+    
     def __str__(self):
         return f"Alert for {self.user.email}: {self.message[:30]}"
 

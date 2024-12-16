@@ -48,19 +48,26 @@
           </li>
 
           <li class="sidebar-item">
-            <a href="#" class="sidebar-link">
+            <a href="{% url 'set_budget' %}" class="sidebar-link">
               <i class="lni lni-calculator-2"></i>
               <span>Budget</span>
             </a>
           </li>
-          <li class="sidebar-item">
-            <a href="#" class="sidebar-link">
+          <li class="sidebar-item" id="notification">
+            <a
+              href="{% url 'check_budget' %}"
+              class="sidebar-link"
+              onclick="clearNotifications(event)"
+            >
               <i class="lni lni-bell-1"></i>
               <span>Alerts</span>
+              <span class="badge" id="notification-count"
+                >{{ alert_count }}</span
+              >
             </a>
           </li>
           <li class="sidebar-item">
-            <a href="#" class="sidebar-link">
+            <a href="{% url 'report' %}" class="sidebar-link">
               <i class="lni lni-bar-chart-dollar"></i>
               <span>Report</span>
             </a>
@@ -109,79 +116,17 @@
             </div>
           </div>
         </div>
-        <div
-          class="modal fade"
-          id="incomeModal"
-          tabindex="-1"
-          aria-labelledby="incomeModalLabel"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="incomeModalLabel">Add Income</h5>
-                <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div class="modal-body">
-                <form method="POST" action="{% url 'add_income' %}">
-                  {% csrf_token %}
-                  <div class="mb-3">
-                    <label for="amount" class="form-label">Amount</label>
-                    <input
-                      type="number"
-                      class="form-control"
-                      id="amount"
-                      name="amount"
-                      required
-                    />
-                  </div>
-                  <div class="mb-3">
-                    <label for="category" class="form-label">Category</label>
-                    <input
-                      list="categories"
-                      class="form-control"
-                      id="category"
-                      name="category"
-                      placeholder="Type or select a category"
-                      required
-                    />
-                    <datalist id="categories">
-                      {% for category in categories %}
-                      <option value="{{ category.name }}">{% endfor %}</option>
-                    </datalist>
-                  </div>
-                  <div class="mb-3">
-                    <label for="description" class="form-label"
-                      >Description</label
-                    >
-                    <textarea
-                      class="form-control"
-                      id="description"
-                      name="description"
-                      rows="3"
-                      required
-                    ></textarea>
-                  </div>
-                  <div class="mb-3">
-                    <label for="date" class="form-label">Date</label>
-                    <input
-                      type="date"
-                      class="form-control"
-                      id="date"
-                      name="date"
-                      required
-                    />
-                  </div>
-                  <button type="submit" class="btn btn-primary">
-                    Add Income
-                  </button>
-                </form>
-              </div>
+        <div class="dashboard">
+          <div
+            class="d-flex justify-content-around align-items-center flex-wrap"
+          >
+            <div class="flex-item">
+              <p>Your Incomes</p>
+              {{total_incomes}}
+            </div>
+            <div class="flex-item">
+              <p>Your Expenses</p>
+              {{total_expenses}}
             </div>
           </div>
         </div>

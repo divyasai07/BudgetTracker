@@ -5,7 +5,7 @@ from .models import User
 from django.contrib.auth import authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import get_user_model
-
+from .models import Budget,Category
 class CustomAuthenticationForm(forms.Form):
     username = forms.EmailField(label="Email")
     password = forms.CharField(widget=forms.PasswordInput, label="Password")
@@ -94,3 +94,10 @@ class EMIForm(forms.ModelForm):
     class Meta:
         model = EMI
         fields = ['amount', 'start_date', 'end_date', 'frequency', 'description', 'next_payment_date']
+
+class BudgetForm(forms.ModelForm):
+    class Meta:
+        model= Budget
+        fields= ['category', 'amount_limit']
+
+    

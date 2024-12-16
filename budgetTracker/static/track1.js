@@ -13,3 +13,11 @@ hamBurger.addEventListener("click", function () {
   sidebar.classList.toggle("compress");
   sidebar.classList.toggle("expand");
 });
+function clearNotifications(event) {
+  event.preventDefault();
+  const notificationCount = document.getElementById("notification-count");
+  if (notificationCount) {
+    notificationCount.style.display = "none";
+  }
+  window.location.href = event.currentTarget.href;
+}

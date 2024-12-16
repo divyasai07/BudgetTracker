@@ -32,5 +32,8 @@ urlpatterns = [
     path('delete_expense/',views.delete_expense,name='delete_expense'),
     path('update_expense/<int:expense_id>/', views.update_expense, name='update_expense'),
     path('add-emi/', views.add_emi, name='add_emi'),
-    path('emis/', views.emi_list, name='emi_list')
+    path('emis/', views.emi_list, name='emi_list'),
+    path('set_budget/',views.set_budget, name='set_budget'),
+    path('check_budget/', views.check_budget, name='check_budget'),
+    path('report/', views.report,name="report")
 ]
